@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pixel Art Converter</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f0f0;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      margin-top: 20px;
+      font-size: 28px;
+      text-align: center;
+    }
+    #uploadContainer {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      margin-top: 20px;
+      min-height: 500px; 
+    }
+    #uploadForm, #result {
+      flex-grow: 1;
+      max-width: 600px;
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      position: relative;
+    }
+    input[type="file"], input[type="number"], input[type="submit"] {
+      margin-bottom: 10px;
+      padding: 8px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+    input[type="button"] {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    input[type="button"]:hover {
+      background-color: #0056b3;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    img {
+      display: block;
+      margin: 10px auto;
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .form-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .form-controls input {
+      margin-bottom: 10px;
+      width: 200px; 
+    }
+    #uploadForm {
+      margin-bottom: 0;
+    }
+    .download-button {
+  text-align: center;
+  margin-top: 60px; 
+}
+
+.download-button input[type="button"] {
+  color: white;
+}
+
+.file-upload-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  color: #fff;
+  background-color: #007bff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.file-upload-wrapper input[type="file"] {
+  position: absolute;
+  font-size: 100px;
+  right: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-upload-text {
+  margin-right: 10px;
+}
+    
+  </style>
+</head>
+
+<body>
+  <h1>Convert your image to Pixel Art</h1>
+  <div id="uploadContainer">
+    <div id="uploadForm">
+      <form id="imageForm" method="post" enctype="multipart/form-data">
+        <label for="file">Choose File:</label>
+        <div class="file-upload-wrapper">
+          <span class="file-upload-text">Upload Image</span>
+          <input type="file" name="file" id="file" onchange="previewImage(this);">
+        </div>
+        <img id="preview" src="#" alt="Uploaded Image" style="display:none;">
+        {% if uploaded_image_path %}
+        <div id="uploadedImageDiv">
+          <img id="uploadedImagePreview" src="{{ url_for('uploaded_file', filename='upload.png') }}" alt="Uploaded Image">
+        </div>
+        {% endif %}
+        <div class="form-controls">
+          <label for="division">Division Factor:</label>
+          <input type="number" name="division" id="division" min="1" required>
+          <input type="submit" value="Convert">
+        </div>
+      </form>
+    </div>
+    <div id="result">
+      {% if result_image_path %}
+      <h2>Converted Image:</h2>
+      <img id="resultImagePreview" src="{{ url_for('result_file', filename='result.png') }}" alt="Result Image">
+      <div class="download-button">
+        <a href="{{ url_for('result_file', filename='result.png') }}" download><input type="button" value="Download"></a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <script>
+    function previewImage(input) {
+      var preview = document.getElementById('preview');
+      var uploadedImageDiv = document.getElementById('uploadedImageDiv');
+
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+          if (uploadedImageDiv) {
+            uploadedImageDiv.style.display = 'none';
+          }
+        }
+        reader.readAsDataURL(input.files[0]);
+      } else {
+        preview.style.display = 'none';
+        if (uploadedImageDiv) {
+          uploadedImageDiv.style.display = 'block';
+        }
+      }
+    }
+  </script>
+</body>
+
+
+
+
+
+
+
+
+
+
+</html>
