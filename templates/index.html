@@ -139,7 +139,7 @@
         <img id="preview" src="#" alt="Uploaded Image" style="display:none;">
         {% if uploaded_image_path %}
         <div id="uploadedImageDiv">
-          <img id="uploadedImagePreview" src="{{ url_for('uploaded_file', filename='upload.png') }}" alt="Uploaded Image">
+          <img id="uploadedImagePreview" src="{{ url_for('uploaded_file', filename='upload.gif') }}" alt="Uploaded Image">
         </div>
         {% endif %}
         <div class="form-controls">
@@ -152,9 +152,9 @@
     <div id="result">
       {% if result_image_path %}
       <h2>Converted Image:</h2>
-      <img id="resultImagePreview" src="{{ url_for('result_file', filename='result.png') }}" alt="Result Image">
+      <img id="resultImagePreview" src="{{ url_for('result_file', filename='result.gif') }}" alt="Result Image">
       <div class="download-button">
-        <a href="{{ url_for('result_file', filename='result.png') }}" download><input type="button" value="Download"></a>
+        <a href="{{ url_for('result_file', filename='result.gif') }}" download><input type="button" value="Download"></a>
       </div>
       {% endif %}
     </div>
@@ -184,14 +184,5 @@
     }
   </script>
 </body>
-
-
-
-
-
-
-
-
-
 
 </html>
