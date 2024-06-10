@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Pixel Art Converter</title>
   <style>
+    /* Estilos mantidos conforme o código original */
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f0f0f0;
@@ -91,40 +92,36 @@
       margin-bottom: 0;
     }
     .download-button {
-  text-align: center;
-  margin-top: 60px; 
-}
-
-.download-button input[type="button"] {
-  color: white;
-}
-
-.file-upload-wrapper {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-  color: #fff;
-  background-color: #007bff;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.file-upload-wrapper input[type="file"] {
-  position: absolute;
-  font-size: 100px;
-  right: 0;
-  top: 0;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.file-upload-text {
-  margin-right: 10px;
-}
-    
+      text-align: center;
+      margin-top: 60px; 
+    }
+    .download-button input[type="button"] {
+      color: white;
+    }
+    .file-upload-wrapper {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      color: #fff;
+      background-color: #007bff;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .file-upload-wrapper input[type="file"] {
+      position: absolute;
+      font-size: 100px;
+      right: 0;
+      top: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .file-upload-text {
+      margin-right: 10px;
+    }
   </style>
 </head>
+
 
 <body>
   <h1>Convert your image to Pixel Art</h1>
@@ -139,7 +136,7 @@
         <img id="preview" src="#" alt="Uploaded Image" style="display:none;">
         {% if uploaded_image_path %}
         <div id="uploadedImageDiv">
-          <img id="uploadedImagePreview" src="{{ url_for('uploaded_file', filename='upload.gif') }}" alt="Uploaded Image">
+          <img id="uploadedImagePreview" src="{{ url_for('uploaded_file', filename=uploaded_image_path.split('/')[-1]) }}" alt="Uploaded Image">
         </div>
         {% endif %}
         <div class="form-controls">
@@ -152,9 +149,9 @@
     <div id="result">
       {% if result_image_path %}
       <h2>Converted Image:</h2>
-      <img id="resultImagePreview" src="{{ url_for('result_file', filename='result.gif') }}" alt="Result Image">
+      <img id="resultImagePreview" src="{{ url_for('result_file', filename=result_image_path.split('/')[-1]) }}" alt="Result Image">
       <div class="download-button">
-        <a href="{{ url_for('result_file', filename='result.gif') }}" download><input type="button" value="Download"></a>
+        <a href="{{ url_for('result_file', filename=result_image_path.split('/')[-1]) }}" download><input type="button" value="Download"></a>
       </div>
       {% endif %}
     </div>
@@ -182,7 +179,18 @@
         }
       }
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var uploadedImageDiv = document.getElementById('uploadedImageDiv');
+      var preview = document.getElementById('preview');
+      if (uploadedImageDiv && uploadedImageDiv.children.length > 0) {
+        preview.style.display = 'none';
+      }
+    });
   </script>
 </body>
+
+
+
 
 </html>
