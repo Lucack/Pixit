@@ -1,5 +1,10 @@
 # 🎨 Pixit
 
+## Site
+
+- [Pixit Site](http://lucak.pythonanywhere.com): http://lucak.pythonanywhere.com
+
+
 ## About
 
 Pixit is a web application that allows users to convert their images into pixel art.
